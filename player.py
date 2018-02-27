@@ -1,11 +1,8 @@
-from table import Table
-
 class Player(object):
 
     def __init__(self, name, money=100):
         self.name = name
         self._chips = money
-        self._table = None
         self._hands = []
         self.isVerbose = False
 
@@ -17,14 +14,6 @@ class Player(object):
         else:
             s+= 'No hands'
         return s
-
-    def sit(self, table):
-        """Add the player to the list of players at a table."""
-        if type(table) == Table:
-            self._table = table
-            table.add_player(self)
-        else:
-            raise TypeError('Table parameter must be of type Table.')
 
     def add_hand(self, hand):
         self._hands.append(hand)

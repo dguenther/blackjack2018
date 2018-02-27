@@ -9,7 +9,7 @@ class HumanPlayer(Player):
         to bet, sit this hand out by entering zero for a bet, or leave the table by
         entering -1.
         """
-        prompt = "Enter your bet ('0' to sit out hand or '-1' to quit):"
+        prompt = f"{self.name}, enter your bet ('0' to sit out hand or '-1' to quit) (${self._chips:,.2f}):"
         #TODO Fix this is pretty sketch way to get a valid input for bet amount.
         bet = -0.5
         while (bet > -1) and (bet < 0):
@@ -37,8 +37,7 @@ class HumanPlayer(Player):
         allPlays = {'s': '[S]tand',
                     'h': '[H]it',
                     'd': '[D]ouble down',
-                    'p': 's[P]lit',
-                    'u': 's[U]rrender'}
+                    'p': 's[P]lit'}
         #
         # Some plays will not be legal for a given hand. Remove those choices.
         #
@@ -50,18 +49,17 @@ class HumanPlayer(Player):
             del allPlays['d']
         if hand.isStanding or hand.isBusted:
             del allPlays['s']
-            del allPlays['u']
 
         assert len(allPlays) >0, "player.play() shouldn't be called if there are no legal plays."
 
         validPlays = allPlays.keys()
-        print(f'You have {hand}.')
+        print(f'{self.name}, you have {hand}.')
         print(f'The dealer has a {dealerShowing} showing.')
         validMenu = 'You can: ' + '   '.join(allPlays.values())
 
         choice = 'getInMyWhileLoop'
         while choice not in validPlays:
-           choice = get_string(validMenu).lower()
+            choice = get_string(validMenu).lower()
         #
         # If the player doubles down, they can say by how much.
         #

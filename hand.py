@@ -53,6 +53,19 @@ class Hand(CardCollection):
             equal = False
         return equal
 
+    def __gt__(self, other):
+        if (self.__eq__(other)):
+            greaterThan = False
+        else:
+            greaterThan = self.value() > other.value()
+        return greaterThan
+
+    def __lt__(self, other):
+        if (self.__eq__(other)):
+            lessThan = False
+        else:
+            lessThan = self.value() < other.value()
+        return lessThan
 
     def hard_value(self):
         value = 0
