@@ -76,6 +76,15 @@ class Dealer(Player):
                     if (choice == 'd'):
                         player.rake_out(bet)
                         hand.double_down(self.shoe.draw().flip(), bet)
+                    if (choice == 'p'):
+                        player.rake_out(hand.bet)
+                        splitHand = Hand(hand.bet)
+                        card = hand.split()
+                        splitHand.hit(card)
+                        splitHand.hit(self.shoe.draw().flip())
+                        player.add_hand(splitHand)
+                        hand.hit(self.shoe.draw().flip())
+
                 print(f"{player.name} finishes with {hand}")
                         
 
@@ -116,6 +125,7 @@ class Dealer(Player):
                 else:
                     raise NotImplementedError(f'Unchecked condition in payout. Player hand: {hand} Dealer: {dealerHand}.')
             player._hands = []
+            self._hands = []
 
         # Remove players that run out of money
         for player in self.players:
@@ -130,6 +140,5 @@ class Dealer(Player):
         if (hand.hard_value() >= 17):
             hand.stand()
         else:
-            card = self.shoe.draw()
-            card.flip()
-            hand.hit(card)
+            hand.hit(self.shoe.draw().flip())
+
